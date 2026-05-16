@@ -54,7 +54,7 @@
 以入门程序为例：
 ```html
 <h1>HTML入门程序</h1>
-<img src="img/1.png">
+<img src="img/1.png" alt="示例">
 ```
 
 # 什么是 CSS 笔记
@@ -98,3 +98,127 @@
 这三种是常见选择器
 
 💡 一句话理解：HTML 是网页的骨架，CSS 就是给骨架“化妆”，让网页变得美观、排版整齐。
+
+### HTML 标签与资源路径笔记
+
+| 标签 | 作用 | 属性/说明 |
+| --- | --- | --- |
+| &lt;video&gt; | 视频标签 | src：指定视频的url（绝对路径/相对路径）<br>controls：是否显示播放控件<br>width：宽度（像素/相对于父元素百分比）<br>height：高度（像素/相对于父元素百分比） |
+| &lt;img&gt; | 图片标签 | src, width, height |
+| &lt;p&gt; | 段落标签 | - |
+
+---
+
+### 资源路径写法
+- **绝对路径**
+  - 绝对磁盘路径（`D:/xxx.jpg`）
+  - 绝对网络路径（`https://xxx.jpg`）
+- **相对路径**
+  - 当前目录：`./`（可以省略）
+  - 上一级目录：`../` 
+
+### HTML 文本格式化标签
+| 标签 | 作用 | 属性/说明 |
+| --- | --- | --- |
+| &lt;b&gt; / &lt;strong&gt; | 加粗 | &lt;strong&gt; 具有强调语义 |
+| &lt;u&gt; / &lt;ins&gt; | 下划线 | &lt;ins&gt; 具有强调语义 |
+| &lt;i&gt; / &lt;em&gt; | 倾斜 | &lt;em&gt; 具有强调语义 |
+| &lt;s&gt; / &lt;del&gt; | 删除线 | &lt;del&gt; 具有强调语义 |
+
+---
+
+### HTML 字符实体
+| 字符实体 | 属性/说明 |
+| --- | --- |
+| &amp;nbsp; | 空格 |
+| &amp;lt; | &lt; |
+| &amp;gt; | &gt; |
+
+---
+
+### CSS 属性
+- `line-height`: 设置行高
+- `text-indent`: 首行缩进 
+
+### 盒子模型
+- 盒子：页面中所有的元素（标签），都可以看做是一个 **盒子**，由盒子将页面中的元素包含在一个矩形区域内，通过盒子的视角更方便的进行页面布局
+- 盒子模型组成：**内容区域（content）、内边距区域（padding）、边框区域（border）、外边距区域（margin）**
+### 布局标签与盒子模型笔记
+
+#### 1. 布局标签
+网页开发中，会使用 `div` 和 `span` 这两个没有语义的布局标签。
+
+| 标签 | 特点 |
+| --- | --- |
+| `<div>` | 一行只显示一个（独占一行）<br>宽度默认是父元素的宽度，高度默认由内容撑开<br>可以设置宽高（width、height） |
+| `<span>` | 一行可以显示多个<br>宽度和高度默认由内容撑开<br>不可以设置宽高（width、height） |
+
+---
+
+#### 2. 盒子模型示意
+- 结构：`margin`（外边距）→ `border`（边框）→ `padding`（内边距）→ `content`（内容）
+- 方向：上、右、下、左
+
+---
+
+#### 3. 盒子模型属性写法示例
+```css
+/* 写法1：分别设置四个方向（上 右 下 左） */
+div {
+  width: 200px;
+  height: 100px;
+  background-color: #05a5d2;
+  padding: 20px 20px 20px 20px;
+  border: 20px solid #6bd5d7;
+  margin: 30px 30px 30px 30px;
+}
+
+/* 写法2：上下 左右 */
+div {
+  width: 200px;
+  height: 100px;
+  background-color: #05a5d2;
+  padding: 20px 20px;
+  border: 20px solid #6bd5d7;
+  margin: 30px 30px;
+}
+
+/* 写法3：四个方向相同，简写 */
+div {
+  width: 200px;
+  height: 100px;
+  background-color: #05a5d2;
+  padding: 20px;
+  border: 20px solid #6bd5d7;
+  margin: 30px;
+}
+```
+### flex布局
+- flex是flexible Box的缩写，意为"弹性布局"，是一种一维的布局模型。flex布局可以为元素之间提供强大的空间分布和对齐能力。
+- 通过给父容器添加flex的相关属性，来控制子元素的位置和排列方式。
+
+| 属性 | 取值 | 含义 |
+| --- | --- | --- |
+| display | flex | 使用flex布局 |
+| flex-direction（设置主轴） | row | 主轴方向为x轴，水平向右。（默认） |
+| | column | 主轴方向为y轴，垂直向下。 |
+| justify-content（子元素在主轴上的对齐方式） | flex-start | 从头开始排列 |
+| | flex-end | 从尾部开始排列 |
+| | center | 在主轴居中对齐 |
+| | space-around | 平分剩余空间 |
+| | space-between | 先两边贴边，再平分剩余空间 |
+### 表单标签
+- 表单：在网页中主要负责数据采集功能，如 注册、登录等数据采集。
+- 标签： `<form>`
+- 表单项：不同类型的 `input` 元素、下拉列表、文本域等。
+  - `<input>`：定义表单项，通过`type`属性控制输入形式（`text`/`password`/...）
+  - `<select>`：定义下拉列表
+  - `<textarea>`：定义文本域
+- 属性：
+  - `action`：规定当提交表单时向何处发送表单数据，URL
+  - `method`：规定用于发送表单数据的方式。`GET`、`POST`
+### 表单标签-表单项
+- `<input>`：表单项，通过`type`属性控制输入形式。
+- `<select>`：定义下拉列表，`<option>` 定义列表项。
+- `<textarea>`：文本域
+![/img/note.png](img/note.png)
