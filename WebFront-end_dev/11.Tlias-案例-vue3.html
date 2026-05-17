@@ -170,15 +170,16 @@
             <!-- 右侧退出登录链接 -->
             <a href="#" class="logout">退出登录</a>
         </div>
+        {{searchForm}}
         <!-- 2. 搜索表单区域 -->
-        <div class="search-form" action="/save" method="post">
+        <div class="search-form">
             <div class="form-item">
                 <label for="name">姓名：</label>
-                <input type="text" id="name" name="name" placeholder="请输入姓名">
+                <input type="text" id="name" v-model="searchForm.name" placeholder="请输入姓名">
             </div>
             <div class="form-item">
                 <label for="gender">性别：</label>
-                <select id="gender" name="gender">
+                <select id="gender" v-model="searchForm.gender">
                     <option value=""></option>
                     <option value="1">男</option>
                     <option value="2">女</option>
@@ -186,7 +187,7 @@
             </div>
             <div class="form-item">
                 <label for="position">职位：</label>
-                <select id="position" name="position">
+                <select id="position" name="position" v-model="searchForm.position">
                     <option value=""></option>
                     <option value="1">班主任</option>
                     <option value="2">讲师</option>
@@ -196,8 +197,8 @@
                 </select>
             </div>
             <div class="btn-group">
-                <button class="btn-search">查询</button>
-                <button class="btn-reset">清空</button>
+                <button type="button" class="btn-search" v-on:click="search">查询</button>
+                <button type="button" class="btn-reset" @click="clear">清空</button>
             </div>
         </div>
         <!-- 3. 表格展示区域 -->
@@ -205,6 +206,7 @@
             <table class="data-table">
                 <thead>
                     <tr>
+                        <th>序号</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>头像</th>
@@ -215,40 +217,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>令狐冲</td>
-                        <td>男</td>
-                        <td><img class="avatar" src="img/1.jpg" alt="头像">
-                        </td>
-                        <td>讲师</td>
-                        <td>2023-01-15</td>
-                        <td>2026-05-16 10:30:00</td>
+                    <tr v-for="(emp, index) in empList" :key="emp.id">
+                        <td>{{index+1}}</td>
+                        <td>{{emp.name}}</td>
+                        <td>{{emp.gender==1?'男':'女'}}</td>
+                        <td><img class="avatar" :src="emp.img" :alt="emp.name"></td>
                         <td>
-                            <button class="btn-edit">编辑</button>
-                            <button class="btn-delete">删除</button>
+                            <!-- v-if 判断 -->
+                            <span v-if="emp.position==1">班主任</span>
+                            <span v-else-if="emp.position==2">讲师</span>
+                            <span v-else-if="emp.position==3">学工主管</span>
+                            <span v-else-if="emp.position==4">教研主管</span>
+                            <span v-else-if="emp.position==5">咨询师</span>
+                            <span v-else>其他</span>
+
+                            <!-- v-show 判断 -->
+                            <!-- <span v-show="emp.position==1">班主任</span>
+                            <span v-show="emp.position==2">讲师</span>
+                            <span v-show="emp.position==3">学工主管</span>
+                            <span v-show="emp.position==4">教研主管</span>
+                            <span v-show="emp.position==5">咨询师</span> -->
                         </td>
-                    </tr>
-                    <tr>
-                        <td>任盈盈</td>
-                        <td>女</td>
-                        <td><img class="avatar" src="img/1.jpg" alt="头像">
-                        </td>
-                        <td>班主任</td>
-                        <td>2023-03-20</td>
-                        <td>2026-05-15 15:45:00</td>
-                        <td>
-                            <button class="btn-edit">编辑</button>
-                            <button class="btn-delete">删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>岳不群</td>
-                        <td>男</td>
-                        <td><img class="avatar" src="img/1.jpg" alt="头像">
-                        </td>
-                        <td>教研主管</td>
-                        <td>2022-09-01</td>
-                        <td>2026-05-14 09:10:00</td>
+                        <td>{{emp.entryDate}}</td>
+                        <td>{{emp.lastOpTime}}</td>
                         <td>
                             <button class="btn-edit">编辑</button>
                             <button class="btn-delete">删除</button>
@@ -264,21 +255,41 @@
         </div>
     </div>
     <!-- 通过js为上面表格中数据行添加监听事件，要求鼠标移入后更换行背景色为#f2e2e2,移出后恢复，使用js新语法-->
-     <script>
-        // 获取表格数据行
-        let trs = document.querySelectorAll('.data-table tbody tr');
-        // 遍历数据行
-        for (let i = 0; i < trs.length; i++) {
-            // 为当前行添加鼠标移入移出事件
-            trs[i].addEventListener('mouseenter',function () {
-                // 鼠标移入时，更换行背景色为#f2e2
-                this.style.backgroundColor = "#f2e2e2";
-            } ) 
-            trs[i].addEventListener('mouseleave',function () {
-                // 鼠标移出时，恢复行背景色
-                this.style.backgroundColor = "";
-            } ) 
-        }
+     <script type="module">
+        // 创建Vue实例
+        import {createApp} from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+        createApp({
+            data(){
+                return{
+                    searchForm:{
+                        name:'',
+                        gender:'',
+                        position:''
+                    },
+                    empList:[
+                        {id:1,name:'令狐冲',gender:1,img:'img/1.jpg',position:2,entryDate:'2023-01-15',lastOpTime:'2026-05-16 10:30:00'},
+                        {id:2,name:'任盈盈',gender:2,img:'img/1.jpg',position:5,entryDate:'2023-03-20',lastOpTime:'2026-05-15 15:45:00'},
+                        {id:3,name:'小昭',gender:2,img:'img/1.jpg',position:2,entryDate:'2023-03-20',lastOpTime:'2026-05-15 15:45:00'},
+                        {id:4,name:'小离',gender:2,img:'img/1.jpg',position:1,entryDate:'2023-03-20',lastOpTime:'2026-05-15 15:45:00'},
+                        {id:5,name:'小雪',gender:2,img:'img/1.jpg',position:3,entryDate:'2023-03-20',lastOpTime:'2026-05-15 15:45:00'},
+                        {id:6,name:'小无',gender:2,img:'img/1.jpg',position:4,entryDate:'2023-03-20',lastOpTime:'2026-05-15 15:45:00'},
+                    ]
+                }
+            },
+            methods:{
+                search(){
+                    console.log(this.searchForm)
+                },
+                clear(){
+                    this.searchForm={
+                        name:'',
+                        gender:'',
+                        position:''
+                    }
+                }
+            }
+
+        }).mount('#container')
      </script>
 </body>
 
