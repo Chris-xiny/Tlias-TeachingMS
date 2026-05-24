@@ -8,7 +8,7 @@
 
 - **官网**：[http://maven.apache.org/](http://maven.apache.org/)
 - **Maven核心工作原理架构**：
-![alt text](Note_png/image-6.png)
+![alt text](png/image-6.png)
 # 🔍 核心流程拆解
 1.起点：pom.xml
 这是 Maven 项目的核心配置文件，所有规则、依赖、构建逻辑都写在这里，是整个流程的 “指挥中心”。
@@ -32,19 +32,19 @@ Maven 定义了一套标准的构建流程（比如 clean、compile、test、pac
 插件执行完成后，会生成项目的构建产物，比如 .class 字节码文件、.jar 包、.war 包等。
 
 - **Maven坐标**：
-![alt text](Note_png/image.png)
+![alt text](png/image.png)
 - **导入模块**:
     - 点击顶部菜单栏「File」→「Project Structure」。
     - 左侧选择「Modules」，点击左上角的 + 号 → 选择「Import Module」。
     - 找到子模块的pom.xml文件，选中后点击「OK」,完成即可。
 - **依赖配置**：
-![alt text](Note_png/image-1.png)
+![alt text](png/image-1.png)
 - **排除依赖**：
-![alt text](Note_png/image-2.png)
+![alt text](png/image-2.png)
 - **生命周期**：
-![alt text](Note_png/image-3.png)
-![alt text](Note_png/image-5.png)
-![alt text](Note_png/image-4.png)
+![alt text](png/image-3.png)
+![alt text](png/image-5.png)
+![alt text](png/image-4.png)
 ### Maven 执行指定生命周期的两种方式
 1. **在 IDEA 中执行**
    在 IDEA 右侧的 Maven 工具栏中，选中对应的生命周期目标，双击即可执行。
@@ -64,15 +64,15 @@ Maven 定义了一套标准的构建流程（比如 clean、compile、test、pac
    # 安装到本地仓库
    mvn install
 # 🔍测试
-![alt text](Note_png/image-7.png)
-![alt text](Note_png/image-8.png)**单元测试**：
-![alt text](Note_png/image-9.png)
-![alt text](Note_png/image-10.png)
-![alt text](Note_png/image-11.png)
-![alt text](Note_png/image-12.png)
-![alt text](Note_png/image-14.png)
-![alt text](Note_png/image-13.png)
+![alt text](png/image-7.png)
+![alt text](png/image-8.png)**单元测试**：
+![alt text](png/image-9.png)
+![alt text](png/image-10.png)
+![alt text](png/image-11.png)
+![alt text](png/image-12.png)
+![alt text](png/image-14.png)
+![alt text](png/image-13.png)
 # 🔍依赖范围
-![alt text](Note_png/image-15.png)
+![alt text](png/image-15.png)
 # 🔍依赖下载报错解决方式
-![alt text](Note_png/image-17.png)
+![alt text](png/image-17.png)
