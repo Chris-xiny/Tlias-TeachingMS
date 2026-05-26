@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表 - 后端联调</title>
+    <script src="/js/vue.global.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { padding: 20px; font-family: Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h2 { margin-bottom: 20px; color: #333; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .loading { text-align: center; padding: 20px; color: #666; }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <h2>用户列表</h2>
+    <div v-if="loading" class="loading">加载中...</div>
+    <table v-else>
+        <thead>
+        <tr><th>ID</th><th>用户名</th><th>姓名</th><th>年龄</th><th>更新时间</th></tr>
+        </thead>
+        <tbody>
+        <tr v-for="user in userList" :key="user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ formatDate(user.updateTime) }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+        setup() {
+            const userList = ref([]);
+            const loading = ref(true);
+
+            // 格式化日期（后端返回格式如 "2024-07-15T15:05:45"，可简单处理）
+            const formatDate = (dateStr) => {
+                if (!dateStr) return '';
+                return dateStr.replace('T', ' ');
+            };
+
+            // 获取数据
+            const fetchUsers = async () => {
+                try {
+                    const response = await axios.get('http://localhost:8080/list');  // 替换为你的后端地址
+                    userList.value = response.data;
+                } catch (error) {
+                    console.error('请求失败', error);
+                    alert('后端接口请求失败，请确认 SpringBoot 已启动且端口正确');
+                } finally {
+                    loading.value = false;
+                }
+            };
+
+            onMounted(() => {
+                fetchUsers();
+            });
+
+            return { userList, loading, formatDate };
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
