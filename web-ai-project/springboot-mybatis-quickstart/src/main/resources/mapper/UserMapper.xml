@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chrisxin.mapper.UserMapper">
+    <!--resultType接收的是查询语句返回的每一行封装在哪个对象(注意是每一单行，不是全部,因此是User而不是List<User>)-->
+    <select id="findAll" resultType="com.chrisxin.entity.User">
+        select id, username, password, name, age from user;
+    </select>
+</mapper>
