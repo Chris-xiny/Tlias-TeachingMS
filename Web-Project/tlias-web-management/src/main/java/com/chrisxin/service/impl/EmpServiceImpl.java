@@ -11,6 +11,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -48,12 +49,15 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<>(p.getTotal(),p.getResult());
     }
 
+
+    @Transactional(rollbackFor = {Exception.class})//Spring的事务管理(默认出现运行时异常RuntimeException才会回滚)
     @Override
     public void add(Emp emp) {
         emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
         //添加员工信息
         empMapper.add(emp);
+
         //添加员工经理
         List<EmpExpr> exprList=emp.getExprList();
         if(!CollectionUtils.isEmpty(exprList)){
