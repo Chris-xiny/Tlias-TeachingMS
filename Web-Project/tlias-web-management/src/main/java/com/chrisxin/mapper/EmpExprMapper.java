@@ -10,4 +10,15 @@ import java.util.List;
 public interface EmpExprMapper {
 
     void addBatch(List<EmpExpr> exprList);
+
+    /**
+     * 批量删除员工工作经历信息
+     */
+    void deleteByEmpId(List<Integer> empIds);
+
+
+    /**
+     * 查询员工工作经历信息
+     */
+    List<EmpExpr> searchByEmpId(Integer empId);
 }
